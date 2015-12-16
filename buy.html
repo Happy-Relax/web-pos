@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="jquery.min.js"></script>
+    <script src="js/shopping_cart.js"></script>
+    <script src="js/lodash.js"></script>
+
+    <script src="/allItem.json"></script>
+    <script src="/loadpromotions.json"></script>
+    <title>shopping cart</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Bootstrap 101 Template</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+<center><h1>购物车</h1></center>
+<div class="col-md-1">
+</div>
+<div class="col-md-10" id="list">
+
+    <div class="row">
+        <h2>没钱赚商店购物清单</h2>
+    </div>
+
+    <!--<div class="table-responsive" >-->
+
+        <!--<table class="table table-striped" id="shopping_list">-->
+            <!--<thead>-->
+            <!--<tr>-->
+
+                <!--<th>商品名</th>-->
+                <!--<th>数量</th>-->
+                <!--<th>单价</th>-->
+                <!--<th>总价</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+
+            <!--<tbody>-->
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<th>可口可乐</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>3瓶</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>3.00</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>6.00</th>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<th>荔枝</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>2斤</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>15.00</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>30.00</th>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<th>方便面</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>3袋</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>4.50</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>12.00</th>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+            <!--</tbody>-->
+        <!--</table>-->
+
+    <!--</div>-->
+
+    <!--<div class="row" >-->
+        <!--<h2>免单物品</h2>-->
+    <!--</div>-->
+    <!--<div class="table-responsive">-->
+        <!--<table class="table table-striped" id="save_list">-->
+            <!--<thead>-->
+            <!--<tr>-->
+
+                <!--<th>商品名</th>-->
+                <!--<th>数量</th>-->
+            <!--</tr>-->
+            <!--</thead>-->
+            <!--<tbody>-->
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<th>可口可乐</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>1瓶</th>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+
+            <!--&lt;!&ndash;<tr>&ndash;&gt;-->
+
+                <!--&lt;!&ndash;<th>方便面</th>&ndash;&gt;-->
+                <!--&lt;!&ndash;<th>1袋</th>&ndash;&gt;-->
+            <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+            <!--</tbody>-->
+        <!--</table>-->
+    <!--</div>-->
+
+    <!--<div class="row-fluid" >-->
+        <!--<h2 id="total">总计</h2>-->
+        <!--&lt;!&ndash;<div class="col-md-4">&ndash;&gt;-->
+            <!--&lt;!&ndash;<center><h3>总计：51.00</h3></center>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+        <!--&lt;!&ndash;<div class="col-md-4">&ndash;&gt;-->
+            <!--&lt;!&ndash;<center><h3>节省：7.50</h3></center>&ndash;&gt;-->
+        <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+    <!--</div>-->
+
+</div>
+
+    <div class="col-md-4" >
+        <button type="button" class="btn btn-default navbar-btn">结帐</button>
+    </div>
+</div>
+
+<script type="text/html" id="template">
+
+    <div class="table-responsive" >
+
+        <table class="table table-striped" id="shopping_list">
+            <thead>
+            <tr>
+
+                <th>商品名</th>
+                <th>数量</th>
+                <th>单价</th>
+                <th>总价</th>
+            </tr>
+            </thead>
+
+            <tbody>
+                <% _.forEach(Receipt.priceItems,function(priceItem){ %>
+                    <tr>
+                        <th><%= priceItem.name%></th>
+                        <th><%= priceItem.count%><%=priceItem.unit%></th>
+                        <th><%= priceItem.price.toFixed(2)%></th>
+                        <th><%= priceItem.totalprice.toFixed(2)%></th>
+                    </tr>
+                <% }); %>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" >
+        <h2>免单物品</h2>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped" id="save_list">
+            <thead>
+            <tr>
+
+                <th>商品名</th>
+                <th>数量</th>
+            </tr>
+            </thead>
+            <tbody>
+
+                <% _.forEach(Receipt.GiftItems,function(GiftItem){ %>
+                <tr>
+                    <th><%= GiftItem.name%></th>
+                    <th><%= GiftItem.promotioncount%><%=GiftItem.unit%></th>
+                </tr>
+                <% }); %>
+
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row-fluid" >
+        <h2 id="total">总计</h2>
+            <div class="col-md-4">
+                <center><h3>总计：<%=Receipt.total.toFixed(2)%>元</h3></center>
+            </div>
+        <div class="col-md-4">
+            <center><h3>节省：<%=Receipt.save.toFixed(2)%>元</h3></center></div>
+    </div>
+</script>
+
+</body>
+</html>
